@@ -1,0 +1,45 @@
+# ./open-webui/docker-compose.yml
+version: '3.8'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:cuda # Use the CUDA image
+    container_name: open-webui
+    ports:
+      - "3000:8080" # Map host port 3000
+    volumes:
+      - open-webui_data:/app/backend/data
+    extra_hosts: # Equivalent of --add-host
+      - "host.docker.internal:host-gateway"
+    environment:
+      # --- Core Settings ---
+      # Still need to point to your NATIVE Ollama
+      - 'OLLAMA_BASE_URL=http://host.docker.internal:11434'
+
+      # --- Web Search Settings (SearXNG) ---
+      - 'ENABLE_RAG_WEB_SEARCH=true'
+      - 'RAG_WEB_SEARCH_ENGINE=searxng'
+      - 'SEARXNG_QUERY_URL=http://searxng:8080/search?q=<query>' # Points to SearXNG service on network
+      - 'RAG_WEB_SEARCH_RESULT_COUNT=3'
+      - 'RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10'
+    deploy: # Handles GPU access and restart policy
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+      restart_policy:
+        condition: always
+    networks:
+      - ai_network
+    # restart: always # 'deploy.restart_policy' is the more modern way
+
+volumes:
+  open-webui_data:
+    name: open-webui_data # Make sure volume name matches if needed
+
+networks:
+  ai_network:
+    external: true
+    name: ai_network

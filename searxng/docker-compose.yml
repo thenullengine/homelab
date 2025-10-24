@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "8080:8080" # Or your preferred host port
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      # Crucial: Tell OpenWebUI web search is enabled and which engine
+      - 'ENABLE_RAG_WEB_SEARCH=true'
+      - 'RAG_WEB_SEARCH_ENGINE=searxng'
+      # Adjust URL if needed (see below)
+      - 'SEARXNG_QUERY_URL=http://searxng:8080/search?q=<query>'
+      # Optional: Control results & concurrency
+      - 'RAG_WEB_SEARCH_RESULT_COUNT=3'
+      - 'RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10'
+    depends_on:
+      - searxng # Make sure SearXNG starts first (optional but good practice)
+    networks:
+      - ai_network # Ensure both containers are on the same network
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    ports:
+      - "8888:8080" # Expose SearXNG on host port 8888 (optional, for direct access/testing)
+    volumes:
+      - ./searxng_settings:/etc/searxng:rw # Mount local config directory
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8888/ # Optional: If accessing directly
+    networks:
+      - ai_network
+    restart: unless-stopped
+
+volumes:
+  open-webui:
+
+networks:
+  ai_network:

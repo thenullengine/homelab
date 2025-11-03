@@ -1,0 +1,64 @@
+# ./n8n/docker-compose.yml
+version: '3.8'
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678" # Map host port 5678 to container port 5678
+    environment:
+      # --- Core Settings ---
+      - 'GENERIC_TIMEZONE=Europe/London' # London UK timezone
+      - 'TZ=Europe/London'
+      - 'N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true'
+      - 'N8N_RUNNERS_ENABLED=true'
+
+      # --- Database Settings (SQLite by default) ---
+      # Uncomment below for PostgreSQL:
+      # - 'DB_TYPE=postgresdb'
+      # - 'DB_POSTGRESDB_DATABASE=n8n'
+      # - 'DB_POSTGRESDB_HOST=postgres'
+      # - 'DB_POSTGRESDB_PORT=5432'
+      # - 'DB_POSTGRESDB_USER=n8n'
+      # - 'DB_POSTGRESDB_PASSWORD=${N8N_DB_PASSWORD}'
+      
+      # --- Security & Base URL ---
+      - 'N8N_HOST=0.0.0.0'
+      - 'N8N_PORT=5678'
+      - 'WEBHOOK_URL=http://localhost:5678/' # Change to your domain if using reverse proxy
+      
+      # --- External Services Integration ---
+      # SearXNG integration for web search tools
+      - 'SEARXNG_QUERY_URL=http://searxng:8080/search?q=<query>'
+      
+      # --- Native Ollama Integration ---
+      # Connect to native Ollama installation
+      - 'OLLAMA_BASE_URL=http://host.docker.internal:11434'
+      
+      # --- Optional: Security Enhancements ---
+      # - 'N8N_BASIC_AUTH_ACTIVE=true'
+      # - 'N8N_BASIC_AUTH_USER=admin'
+      # - 'N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}'
+    volumes:
+      - n8n_data:/home/node/.n8n
+    extra_hosts: # Enable access to native Ollama
+      - "host.docker.internal:host-gateway"
+    networks:
+      - ai_network
+    restart: unless-stopped
+    # Optional: Add health check
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5678/healthz || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  n8n_data:
+    name: n8n_data
+
+networks:
+  ai_network:
+    external: true # Assumes the network is created separately
+    name: ai_network

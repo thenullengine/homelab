@@ -1,0 +1,299 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🔍 SearXNG: Start",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["up", "-d"],
+            "options": {
+                "cwd": "${workspaceFolder}/searxng"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🔍 SearXNG: Stop",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["down"],
+            "options": {
+                "cwd": "${workspaceFolder}/searxng"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🔍 SearXNG: Restart",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["restart"],
+            "options": {
+                "cwd": "${workspaceFolder}/searxng"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🔍 SearXNG: View Logs",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["logs", "-f"],
+            "options": {
+                "cwd": "${workspaceFolder}/searxng"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🤖 Open WebUI: Start",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["up", "-d"],
+            "options": {
+                "cwd": "${workspaceFolder}/openwebui"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🤖 Open WebUI: Stop",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["down"],
+            "options": {
+                "cwd": "${workspaceFolder}/openwebui"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🤖 Open WebUI: Restart",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["restart"],
+            "options": {
+                "cwd": "${workspaceFolder}/openwebui"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🤖 Open WebUI: View Logs",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["logs", "-f"],
+            "options": {
+                "cwd": "${workspaceFolder}/openwebui"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⚡ n8n: Start",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["up", "-d"],
+            "options": {
+                "cwd": "${workspaceFolder}/n8n"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⚡ n8n: Stop",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["down"],
+            "options": {
+                "cwd": "${workspaceFolder}/n8n"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⚡ n8n: Restart",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["restart"],
+            "options": {
+                "cwd": "${workspaceFolder}/n8n"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⚡ n8n: View Logs",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["logs", "-f"],
+            "options": {
+                "cwd": "${workspaceFolder}/n8n"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🚀 Homelab: Start All Services",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "Write-Host '🔍 Starting SearXNG...' -ForegroundColor Cyan; cd searxng; docker-compose up -d; cd ..; Write-Host '🤖 Starting Open WebUI...' -ForegroundColor Green; cd openwebui; docker-compose up -d; cd ..; Write-Host '⚡ Starting n8n...' -ForegroundColor Yellow; cd n8n; docker-compose up -d; cd ..; Write-Host '✅ All services started!' -ForegroundColor Green"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🛑 Homelab: Stop All Services",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "Write-Host '🛑 Stopping n8n...' -ForegroundColor Yellow; cd n8n; docker-compose down; cd ..; Write-Host '🛑 Stopping Open WebUI...' -ForegroundColor Green; cd openwebui; docker-compose down; cd ..; Write-Host '🛑 Stopping SearXNG...' -ForegroundColor Cyan; cd searxng; docker-compose down; cd ..; Write-Host '✅ All services stopped!' -ForegroundColor Red"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "📊 Homelab: Service Status",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "Write-Host '=== Homelab Service Status ===' -ForegroundColor Magenta; Write-Host ''; Write-Host '🔍 SearXNG:' -ForegroundColor Cyan; docker ps --filter 'name=searxng' --format 'table {{.Names}}\\t{{.Status}}\\t{{.Ports}}'; Write-Host ''; Write-Host '🤖 Open WebUI:' -ForegroundColor Green; docker ps --filter 'name=open-webui' --format 'table {{.Names}}\\t{{.Status}}\\t{{.Ports}}'; Write-Host ''; Write-Host '⚡ n8n:' -ForegroundColor Yellow; docker ps --filter 'name=n8n' --format 'table {{.Names}}\\t{{.Status}}\\t{{.Ports}}'"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

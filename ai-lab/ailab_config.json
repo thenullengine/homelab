@@ -1,7 +1,7 @@
 {
     "theme": "solar",
     "comfyui": {
-        "install_parent_dir": "D:\\_AI",
+        "install_parent_dir": "D:/_AI/_ailab",
         "user_directory": "D:\\_AI\\user",
         "output_directory": "D:\\_AI\\output",
         "input_directory": "D:\\_AI\\input",

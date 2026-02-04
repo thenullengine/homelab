@@ -11,6 +11,8 @@ A unified Python GUI application for easy installation and management of both Co
 - **Easy Management**: Start, update, and manage both tools from a simple GUI
 - **Progress Logging**: Real-time installation and operation logs per tool
 - **Persistent Configuration**: Save and load settings for both tools
+- **Modern Themes**: Optional ttkbootstrap themes for better UI
+- **Virtual Environment Support**: Isolated Python dependencies
 
 ## Requirements
 
@@ -19,14 +21,26 @@ Before running the AI-Lab Manager, ensure you have:
 - **Windows 10/11**
 - **Git** (required for cloning repositories)
 - **Node.js** (required for AI Toolkit, will be installed if missing)
-- **Python 3.8+** (with tkinter)
+- **Python 3.10+** (with tkinter)
 - **NVIDIA GPU** with CUDA support (recommended)
 
 ## Quick Start
 
-### Option 1: Using the GUI (Recommended)
+### Option 1: Using Virtual Environment (Recommended for Development)
 
-1. Run the GUI manager:
+1. **Setup virtual environment** (first time only):
+   ```bash
+   scripts\setup_venv.bat
+   ```
+
+2. **Run the manager**:
+   ```bash
+   scripts\start_manager_venv.bat
+   ```
+
+### Option 2: Using Global Python
+
+1. **Run the GUI manager**:
    ```bash
    python ailab_manager.py
    ```

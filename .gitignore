@@ -1,1 +1,12 @@
 .env
+
+# Python virtual environments
+ai-lab/venv/
+ai-lab/__pycache__/
+ai-lab/*.pyc
+ai-lab/build/
+ai-lab/dist/
+ai-lab/*.spec.bak
+
+# AI Lab Manager config (contains local paths)
+ai-lab/ailab_config.json

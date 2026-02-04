@@ -7,6 +7,22 @@ echo.
 :: Change to parent directory
 cd /d "%~dp0.."
 
+:: Check if we should use venv or global Python
+set USE_VENV=0
+if exist "venv\Scripts\activate.bat" (
+    echo Virtual environment detected!
+    echo.
+    choice /C YN /M "Build using virtual environment"
+    if errorlevel 2 (
+        echo Using global Python installation...
+    ) else (
+        echo Activating virtual environment...
+        call venv\Scripts\activate.bat
+        set USE_VENV=1
+    )
+    echo.
+)
+
 :: Check if pyinstaller is installed
 python -c "import PyInstaller" 2>nul
 if errorlevel 1 (

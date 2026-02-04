@@ -1,0 +1,18 @@
+{
+    "theme": "solar",
+    "comfyui": {
+        "install_parent_dir": "D:\\_AI",
+        "user_directory": "D:\\_AI\\user",
+        "output_directory": "D:\\_AI\\output",
+        "input_directory": "D:\\_AI\\input",
+        "extra_model_paths": "D:\\_AI\\extra_model_paths.yaml",
+        "quick_install": false,
+        "vram_mode": "--normalvram"
+    },
+    "aitoolkit": {
+        "install_parent_dir": "D:/_AI/ai-toolkit"
+    },
+    "onetrainer": {
+        "install_parent_dir": "D:/_AI"
+    }
+}

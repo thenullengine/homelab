@@ -1,25 +1,47 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+# AI Lab Manager - PyInstaller Spec File
+# Builds a self-contained executable with all dependencies
+
+block_cipher = None
 
 a = Analysis(
     ['ailab_manager.py'],
     pathex=[],
     binaries=[],
     datas=[],
-    hiddenimports=[],
+    hiddenimports=[
+        'ttkbootstrap',
+        'ttkbootstrap.scrolled',
+        'psutil',
+        'tkinter',
+        'tkinter.ttk',
+        'tkinter.scrolledtext',
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=[
+        'matplotlib',
+        'numpy',
+        'pandas',
+        'scipy',
+        'IPython',
+        'jupyter',
+    ],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
     noarchive=False,
-    optimize=0,
 )
-pyz = PYZ(a.pure)
+
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
 exe = EXE(
     pyz,
     a.scripts,
     a.binaries,
+    a.zipfiles,
     a.datas,
     [],
     name='AILab_Manager',
@@ -35,5 +57,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='NONE',
+    icon=None,
 )

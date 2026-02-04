@@ -35,6 +35,27 @@ Before running the AI-Lab Manager, ensure you have:
    scripts\start_manager.bat
    ```
 
+### Option 3: Using Standalone Executable (No Python Required)
+
+1. **Build the executable**:
+   ```bash
+   scripts\build_exe.bat
+   ```
+
+2. **Create desktop shortcut** (optional):
+   ```bash
+   powershell -ExecutionPolicy Bypass -File scripts\create_shortcut.ps1
+   ```
+
+3. **Run** `dist\AILab_Manager.exe`
+   - Fully self-contained with all dependencies
+   - No Python installation needed
+   - Can be distributed to any Windows machine
+
+---
+
+## Using the Application
+
 2. Choose the tool you want to install (ComfyUI or AI Toolkit tab)
 
 3. Configure installation directories and settings

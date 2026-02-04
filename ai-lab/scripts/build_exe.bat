@@ -31,9 +31,24 @@ if errorlevel 1 (
     echo.
 )
 
-:: Build the executable
-echo Building executable...
-pyinstaller --onefile --windowed --icon=NONE --name="AILab_Manager" ailab_manager.py
+:: Check if all dependencies are installed
+echo Checking dependencies...
+pip install -r requirements.txt --quiet
+echo.
+
+:: Build the executable with all dependencies embedded
+echo Building self-contained executable...
+echo This may take a few minutes...
+echo.
+pyinstaller AILab_Manager.spec
+
+if errorlevel 1 (
+    echo.
+    echo ERROR: Build failed!
+    echo.
+    pause
+    exit /b 1
+)
 
 echo.
 echo ================================================================
@@ -42,9 +57,21 @@ echo ================================================================
 echo.
 echo Executable location: dist\AILab_Manager.exe
 echo.
-echo You can now:
-echo   1. Run dist\AILab_Manager.exe directly
-echo   2. Create a shortcut to this exe file
-echo   3. Move it anywhere you want
+echo The executable is SELF-CONTAINED and includes:
+echo   - Python runtime
+echo   - tkinter GUI framework
+echo   - ttkbootstrap themes
+echo   - psutil library
+echo   - All necessary dependencies
 echo.
+echo You can now:
+echo   1. Run dist\AILab_Manager.exe directly (no Python needed!)
+echo   2. Distribute this single file to any Windows machine
+echo   3. Create shortcuts anywhere you want
+echo.
+if %USE_VENV%==1 (
+    echo Note: Virtual environment was used for building.
+    echo The exe is still fully standalone.
+    echo.
+)
 pause

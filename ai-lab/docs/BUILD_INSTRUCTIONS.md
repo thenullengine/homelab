@@ -1,6 +1,6 @@
 # Building AI-Lab Manager as Executable
 
-This guide shows you how to convert the Python script into a standalone Windows executable (.exe) and create shortcuts.
+This guide shows you how to convert the Python script into a fully self-contained Windows executable (.exe) that includes all dependencies.
 
 ## Quick Start (Easiest Method)
 
@@ -10,48 +10,47 @@ scripts\build_exe.bat
 ```
 
 This will:
+- Auto-detect if you're using a virtual environment
 - Install PyInstaller if needed
-- Create a standalone executable
+- Ensure all dependencies are installed
+- Create a **fully self-contained** executable with embedded:
+  - Python runtime
+  - tkinter GUI framework
+  - ttkbootstrap themes
+  - psutil library
+  - All Python dependencies
 - Output to `dist\AILab_Manager.exe`
 
-### Step 2: Create Desktop Shortcut
+### Step 2: Create Desktop Shortcut (Optional)
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\create_shortcut.ps1
 ```
 
-That's it! You'll now have a desktop shortcut to launch AI-Lab Manager.
+That's it! You now have a standalone executable that works on **any Windows machine without Python installed**.
 
 ---
 
-## Manual Methods
+## Virtual Environment Builds (Recommended)
 
-### Method 1: Using PyInstaller (Recommended)
+For the cleanest build with isolated dependencies:
 
-1. **Install PyInstaller**
-   ```bash
-   pip install pyinstaller
-   ```
-
-2. **Build the executable**
-   ```bash
-   pyinstaller --onefile --windowed --name="AILab_Manager" ailab_manager.py
-   ```
-
-3. **Find your executable**
-   - Location: `dist\AILab_Manager.exe`
-   - This is a standalone file - you can move it anywhere!
-
-4. **Create a shortcut**
-   - Right-click on `AILab_Manager.exe`
-   - Select "Create shortcut"
-   - Move shortcut to Desktop or Start Menu
-
-### Method 2: Using the Spec File
-
-For advanced customization:
+### 1. Setup Virtual Environment
 ```bash
-pyinstaller AILab_Manager.spec
+scripts\setup_venv.bat
 ```
+
+### 2. Build from Virtual Environment
+```bash
+scripts\build_exe.bat
+```
+
+When prompted, choose **Yes** to use the virtual environment.
+
+**Benefits**:
+- ✅ No interference from global Python packages
+- ✅ Reproducible builds
+- ✅ Clean dependency isolation
+- ✅ Same self-contained exe output
 
 ---
 
@@ -59,22 +58,23 @@ pyinstaller AILab_Manager.spec
 
 ### Executable Details
 - **Name**: `AILab_Manager.exe`
-- **Type**: Standalone Windows executable
-- **Size**: ~15-20 MB (includes Python runtime)
+- **Type**: Single-file, fully self-contained Windows executable
+- **Size**: ~25-30 MB (includes everything needed)
 - **Location**: `dist\AILab_Manager.exe`
+- **Requirements on target machine**: **NONE** - no Python needed!
 
-### Dependencies Included
-The executable bundles:
-- Python runtime
-- tkinter GUI framework
-- All required Python packages
-- Configuration file template
+### Dependencies INCLUDED in Executable
+✅ Python 3.10+ runtime  
+✅ tkinter GUI framework  
+✅ ttkbootstrap (modern themes)  
+✅ psutil (process management)  
+✅ All required Python libraries  
 
-### What's NOT Included
-- ComfyUI itself (installed when you click Install ComfyUI)
-- AI Toolkit itself (installed when you click Install AI Toolkit)
-- Git, Node.js (checked at runtime)
-- Your saved configurations (reads ailab_config.json from exe directory)
+### What's NOT Included (Installed at Runtime)
+❌ ComfyUI itself (installed when you click Install ComfyUI)  
+❌ AI Toolkit itself (installed when you click Install AI Toolkit)  
+❌ Git, Node.js (checked at runtime, prompts if missing)  
+❌ Your saved configurations (reads ailab_config.json from exe directory)  
 
 ---
 
@@ -97,8 +97,6 @@ To distribute with default settings:
 3. Place them in the same folder
 4. The exe will read the config automatically
 
----
-
 ## Troubleshooting
 
 ### "PyInstaller is not recognized"
@@ -108,7 +106,7 @@ pip install pyinstaller
 ```
 
 ### "Python is not recognized"
-**Solution**: Install Python 3.x and add it to PATH
+**Solution**: Install Python 3.10+ and add it to PATH
 
 ### Build fails with module errors
 **Solution**: Install required dependencies
@@ -116,11 +114,21 @@ pip install pyinstaller
 pip install -r requirements.txt
 ```
 
+Or use virtual environment (see [VENV_SETUP.md](VENV_SETUP.md))
+
 ### Executable won't start
 **Possible causes:**
-1. Antivirus blocking (add exception)
+1. Antivirus blocking (add exception for PyInstaller and the exe)
 2. Missing Visual C++ Runtime (install from Microsoft)
 3. Corrupted build (delete `build` and `dist` folders, rebuild)
+4. Hidden imports missing (already configured in spec file)
+
+### Build is too large
+The spec file already excludes unnecessary packages like matplotlib, numpy, pandas, etc.
+
+**If you need to reduce size further**:
+- Remove ttkbootstrap themes (use plain tkinter)
+- Disable UPX compression in spec file: `upx=False`
 
 ### Shortcut creation fails
 **Solution**: Run PowerShell script as administrator
@@ -130,23 +138,72 @@ powershell -ExecutionPolicy Bypass -File scripts\create_shortcut.ps1
 
 ---
 
-## Advanced Options
+## Advanced Configuration
 
 ### Custom Icon
 To add a custom icon to your executable:
 
 1. Get an `.ico` file (Windows icon format)
-2. Modify the build command:
+2. Update `AILab_Manager.spec`:
+   ```python
+   icon='path/to/myicon.ico',
+   ```
+3. Rebuild:
    ```bash
-   pyinstaller --onefile --windowed --icon=myicon.ico --name="AILab_Manager" ailab_manager.py
+   pyinstaller AILab_Manager.spec
    ```
 
 ### Console Window (for debugging)
 To show a console window (useful for debugging):
-```bash
-pyinstaller --onefile --icon=NONE --name="AILab_Manager" ailab_manager.py
+
+In `AILab_Manager.spec`, change:
+```python
+console=True,  # Changed from False
 ```
-(Remove `--windowed` flag)
+
+### Exclude More Packages
+Edit the `excludes` list in `AILab_Manager.spec`:
+```python
+excludes=[
+    'matplotlib',
+    'numpy',
+    'pandas',
+    'scipy',
+    'IPython',
+    'jupyter',
+    # Add more here
+],
+```
+
+---
+
+## Technical Details
+
+### PyInstaller Spec File
+The `AILab_Manager.spec` file controls the build process:
+
+- **hiddenimports**: Ensures ttkbootstrap and dependencies are included
+- **excludes**: Removes unnecessary packages (matplotlib, numpy, etc.)
+- **upx=True**: Compresses the executable
+- **console=False**: No console window (GUI only)
+- **onefile**: Single executable (all-in-one)
+
+### Why Self-Contained?
+The spec file explicitly includes all imports:
+```python
+hiddenimports=[
+    'ttkbootstrap',
+    'ttkbootstrap.scrolled',
+    'psutil',
+    'tkinter',
+    'tkinter.ttk',
+    'tkinter.scrolledtext',
+],
+```
+
+This ensures the executable works **without any Python installation** on target machines.
+
+---
 
 ### Smaller Executable
 To reduce executable size:

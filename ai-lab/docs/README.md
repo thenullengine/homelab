@@ -194,7 +194,10 @@ Use the "Clear Log" button to clean up the log view.
 Install Git from https://git-scm.com/
 
 ### "Python is not recognized"
-Install Python 3.8+ and ensure "Add to PATH" is checked during installation.
+Install Python 3.10+ and ensure "Add to PATH" is checked during installation.
+
+### Virtual Environment Issues
+See [VENV_SETUP.md](VENV_SETUP.md) for detailed troubleshooting.
 
 ### ComfyUI won't start
 - Verify installation completed successfully
@@ -204,6 +207,39 @@ Install Python 3.8+ and ensure "Add to PATH" is checked during installation.
 ### AI Toolkit won't start
 - Verify python_embeded folder exists
 - Check that ai-toolkit folder exists
+
+### Executable Build Issues
+- Ensure all dependencies are installed: `pip install -r requirements.txt`
+- Try building from virtual environment
+- Check PyInstaller is installed: `pip install pyinstaller`
+
+## Documentation
+
+- **[BUILD_INSTRUCTIONS.md](BUILD_INSTRUCTIONS.md)** - How to build standalone executable
+- **[VENV_SETUP.md](VENV_SETUP.md)** - Virtual environment setup and usage
+
+## File Structure
+
+```
+ai-lab/
+├── ailab_manager.py          # Main application
+├── ailab_config.json         # Saved configuration (gitignored)
+├── requirements.txt          # Python dependencies
+├── AILab_Manager.spec        # PyInstaller configuration
+├── venv/                     # Virtual environment (gitignored)
+├── scripts/
+│   ├── setup_venv.bat       # Create virtual environment
+│   ├── start_manager_venv.bat  # Run with venv
+│   ├── start_manager.bat    # Run with global Python
+│   ├── build_exe.bat        # Build executable
+│   └── create_shortcut.ps1  # Create desktop shortcut
+├── docs/
+│   ├── README.md            # This file
+│   ├── BUILD_INSTRUCTIONS.md
+│   └── VENV_SETUP.md
+└── dist/
+    └── AILab_Manager.exe    # Built executable (after building)
+```
 - Review log for error messages
 
 ### Antivirus blocking executable

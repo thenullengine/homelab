@@ -1,4 +1,5 @@
 .env
+.vscode/
 
 # Python virtual environments
 ai-lab/venv/
@@ -10,3 +11,9 @@ ai-lab/*.spec.bak
 
 # AI Lab Manager config (contains local paths)
 ai-lab/ailab_config.json
+
+# Backup files (large archives should not be in git)
+*.tar.gz
+*.zip
+*.7z
+*.backup

@@ -20,11 +20,9 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 try:
     import ttkbootstrap as ttk
-    from ttkbootstrap.scrolled import ScrolledText
     THEME_AVAILABLE = True
 except ImportError:
-    from tkinter import ttk, scrolledtext
-    ScrolledText = scrolledtext.ScrolledText
+    from tkinter import ttk
     THEME_AVAILABLE = False
 import json
 import os
@@ -277,21 +275,6 @@ class AILabManager:
             self.comfyui_restart_btn = ttk.Button(button_frame, text="Restart\nComfyUI", 
                                                   command=self.restart_comfyui, width=12)
         self.comfyui_restart_btn.grid(row=0, column=4, padx=10, pady=10)
-        
-        # Output Log
-        log_frame = ttk.LabelFrame(self.comfyui_tab, text="ComfyUI Output Log", padding="10")
-        log_frame.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(10, 0))
-        log_frame.columnconfigure(0, weight=1)
-        log_frame.rowconfigure(0, weight=1)
-        
-        if THEME_AVAILABLE:
-            self.comfyui_log_text = ScrolledText(log_frame, wrap=tk.WORD, height=20, autohide=True)
-        else:
-            self.comfyui_log_text = ScrolledText(log_frame, wrap=tk.WORD, height=20)
-        self.comfyui_log_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        
-        # Clear log button
-        ttk.Button(log_frame, text="Clear Log", command=lambda: self.comfyui_log_text.delete(1.0, tk.END)).grid(row=1, column=0, pady=(5, 0))
     
     def create_aitoolkit_tab(self):
         """Create AI Toolkit tab content"""
@@ -347,21 +330,6 @@ class AILabManager:
             self.aitoolkit_restart_btn = ttk.Button(button_frame, text="Restart\nAI Toolkit", 
                                                     command=self.restart_aitoolkit, width=12)
         self.aitoolkit_restart_btn.grid(row=0, column=5, padx=10, pady=10)
-        
-        # Output Log
-        log_frame = ttk.LabelFrame(self.aitoolkit_tab, text="AI Toolkit Output Log", padding="10")
-        log_frame.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(10, 0))
-        log_frame.columnconfigure(0, weight=1)
-        log_frame.rowconfigure(0, weight=1)
-        
-        if THEME_AVAILABLE:
-            self.aitoolkit_log_text = ScrolledText(log_frame, wrap=tk.WORD, height=20, autohide=True)
-        else:
-            self.aitoolkit_log_text = ScrolledText(log_frame, wrap=tk.WORD, height=20)
-        self.aitoolkit_log_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        
-        # Clear log button
-        ttk.Button(log_frame, text="Clear Log", command=lambda: self.aitoolkit_log_text.delete(1.0, tk.END)).grid(row=1, column=0, pady=(5, 0))
     
     def create_onetrainer_tab(self):
         """Create OneTrainer tab content"""
@@ -417,21 +385,6 @@ class AILabManager:
             self.onetrainer_restart_btn = ttk.Button(button_frame, text="Restart\nOneTrainer", 
                                                      command=self.restart_onetrainer, width=12)
         self.onetrainer_restart_btn.grid(row=0, column=5, padx=10, pady=10)
-        
-        # Output Log
-        log_frame = ttk.LabelFrame(self.onetrainer_tab, text="OneTrainer Output Log", padding="10")
-        log_frame.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(10, 0))
-        log_frame.columnconfigure(0, weight=1)
-        log_frame.rowconfigure(0, weight=1)
-        
-        if THEME_AVAILABLE:
-            self.onetrainer_log_text = ScrolledText(log_frame, wrap=tk.WORD, height=20, autohide=True)
-        else:
-            self.onetrainer_log_text = ScrolledText(log_frame, wrap=tk.WORD, height=20)
-        self.onetrainer_log_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        
-        # Clear log button
-        ttk.Button(log_frame, text="Clear Log", command=lambda: self.onetrainer_log_text.delete(1.0, tk.END)).grid(row=1, column=0, pady=(5, 0))
     
     # Utility Methods
     def browse_directory(self, var):
@@ -578,18 +531,9 @@ class AILabManager:
                            "Then restart the application.")
     
     def log_to_tab(self, tab, message):
-        """Add message to appropriate log"""
-        if tab == "comfyui":
-            log_widget = self.comfyui_log_text
-        elif tab == "aitoolkit":
-            log_widget = self.aitoolkit_log_text
-        elif tab == "onetrainer":
-            log_widget = self.onetrainer_log_text
-        else:
-            return
-        log_widget.insert(tk.END, message + "\n")
-        log_widget.see(tk.END)
-        self.root.update_idletasks()
+        """Print message to console with tab prefix"""
+        prefix = f"[{tab.upper()}]" if tab else ""
+        print(f"{prefix} {message}" if prefix else message)
     
     def _run_command(self, cmd, cwd, tab):
         """Run a command and log output"""

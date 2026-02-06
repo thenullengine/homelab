@@ -9,7 +9,7 @@ A unified Python GUI application for easy installation and management of both Co
 - **One-Click Installation**: Automated installation of both tools with all dependencies
 - **GPU Support**: Installs PyTorch with CUDA support for both tools
 - **Easy Management**: Start, update, and manage both tools from a simple GUI
-- **Progress Logging**: Real-time installation and operation logs per tool
+- **Console Output**: Real-time logs in CMD window for easy debugging
 - **Persistent Configuration**: Save and load settings for both tools
 - **Modern Themes**: Optional ttkbootstrap themes for better UI
 - **Virtual Environment Support**: Isolated Python dependencies
@@ -178,15 +178,10 @@ The manager uses `ailab_config.json` to store settings:
 - Installed to: `[parent_dir]/AI-Toolkit/`
 - Contains: ai-toolkit/, python_embeded/, startup scripts
 
-## Logs
+## Configuration
 
-Each tab has its own log output showing:
-- Installation progress
-- Package installations
-- Error messages
-- Status updates
-
-Use the "Clear Log" button to clean up the log view.
+Configuration is automatically saved in `ailab_config.json` in the application directory.
+Settings persist between sessions.
 
 ## Troubleshooting
 

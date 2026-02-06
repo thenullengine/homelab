@@ -154,11 +154,11 @@ To add a custom icon to your executable:
    ```
 
 ### Console Window (for debugging)
-To show a console window (useful for debugging):
+The application now **always shows a console window** for log output. This is the default behavior.
 
-In `AILab_Manager.spec`, change:
+To hide the console (GUI-only mode), edit `AILab_Manager.spec`:
 ```python
-console=True,  # Changed from False
+console=False,  # Changed from True
 ```
 
 ### Exclude More Packages
